@@ -1,3 +1,9 @@
+#include <dht_nonblocking.h>
+#define DHT_SENSOR_TYPE DHT_TYPE_11
+
+static const int DHT_SENSOR_PIN = A2;
+DHT_nonblocking dht_sensor( DHT_SENSOR_PIN, DHT_SENSOR_TYPE );
+
 int sensorPin = A0; // select the input pin for LDR
 int sensorValue = 0; // variable to store the value coming from the sensor
 
@@ -15,18 +21,18 @@ void setup() {
 }
 
 void loop() {
-
+   LED Sensor
   switch (gstate) {
 
     case 0:
       sensorValue = analogRead(sensorPin); // read the value from the sensor
-      Serial.println(sensorValue); //prints the values coming from the sensor on the screen
       delay(100);
       if (sensorValue > 200) {
         delay(600);
         gstate = 1;
       }
       break;
+
     case 1:
       brightness = brightness + fadeAmount;
       if ( brightness >= 255) {
@@ -37,14 +43,42 @@ void loop() {
         reset();
       }
       analogWrite(led, brightness);
-      Serial.println(brightness);
       delay(30);
+      break;
+  }
+
+  //Humidity Sensor
+  switch (gstate) {
+    case 0:
+      float temperature;
+      float humidity;
+
+      if (measure_environment( &temperature, &humidity ) == true) {
+
+        Serial.print( "T = " );
+        Serial.print( temperature, 1 );
+        Serial.print( " deg. C, H = " );
+        Serial.print( humidity, 1 );
+        Serial.println( "%" );
+      }
+      break;
+
+    case 1:
       break;
   }
 }
 
-void reset(){
+static bool measure_environment( float *temperature, float *humidity ) {
+
+  if ( dht_sensor.measure( temperature, humidity ) == true ) {
+    return ( true );
+  }
+  return false;
+}
+
+
+void reset() {
   fadeAmount = 3;
   gstate = 0;
-  brightness =0;
+  brightness = 0;
 }
