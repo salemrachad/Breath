@@ -9,15 +9,22 @@ int sensorValue = 0; // variable to store the value coming from the sensor
 
 int led = 9;
 int brightness = 0;    // how bright the LED is
-int fadeAmount = 3;    // how many points to fade the LED by
+int fadeAmount = 5;    // how many points to fade the LED by
 
 int ldrperiod = 100;
 unsigned long time_now = 0;
 
+int hdtperiod = 10000;
+unsigned long time_now1 = 0;
+
+unsigned long previousMillis = 0;
+unsigned long interval = 6000;
+int a = 60;
+
 
 int gstate = 0;
 
-const int numReadings = 6;
+const int numReadings = 1;
 
 int readings[numReadings];      // the readings from the analog input
 int readIndex = 0;              // the index of the current reading
@@ -34,7 +41,7 @@ void setup() {
 }
 
 void loop() {
-  //LDR Sensor
+  //LDR Sensor LED Setup
   switch (gstate) {
 
     case 0:
@@ -86,12 +93,17 @@ void loop() {
         // calculate the average:
         average = total / numReadings;
         // send it to the computer as ASCII digits
-        Serial.println(average);
 
-        if (average >= 60) {
+        unsigned long currentMillis = millis();
+
+        //        if (currentMillis - previousMillis > interval) {
+        //          previousMillis = currentMillis;
+        Serial.println(average);
+        if (average >= 75) {
           gstate = 1;
         }
       }
+      //      }
       break;
 
     case 1:
@@ -113,7 +125,8 @@ static bool measure_environment( float *temperature, float *humidity ) {
 }
 
 void reset() {
-  fadeAmount = 3;
+
+  fadeAmount = 5;
   gstate = 0;
   brightness = 0;
 }
