@@ -11,6 +11,9 @@ int led = 9;
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 3;    // how many points to fade the LED by
 
+int period = 100;
+unsigned long time_now = 0;
+
 int gstate = 0;
 
 void setup() {
@@ -21,16 +24,19 @@ void setup() {
 }
 
 void loop() {
-   LED Sensor
+  //LED Sensor
   switch (gstate) {
 
     case 0:
-      sensorValue = analogRead(sensorPin); // read the value from the sensor
-      delay(100);
-      if (sensorValue > 200) {
-        delay(600);
-        gstate = 1;
+      if (millis() >= time_now + period) {
+        sensorValue = analogRead(sensorPin); // read the value from the sensor
+        if (sensorValue > 200) {
+          delay(600);
+          gstate = 1;
+        }
+        time_now += period;
       }
+
       break;
 
     case 1:
@@ -55,9 +61,12 @@ void loop() {
 
       if (measure_environment( &temperature, &humidity ) == true) {
 
-        Serial.print( "T = " );
-        Serial.print( temperature, 1 );
-        Serial.print( " deg. C, H = " );
+          if(humidity >= 90){
+            gstate = 1;
+          }
+//        Serial.print( "T = " );
+//        Serial.print( temperature, 1 );
+//        Serial.print( " deg. C, H = " );
         Serial.print( humidity, 1 );
         Serial.println( "%" );
       }
@@ -70,10 +79,15 @@ void loop() {
 
 static bool measure_environment( float *temperature, float *humidity ) {
 
-  if ( dht_sensor.measure( temperature, humidity ) == true ) {
-    return ( true );
+  static unsigned long measurement_timestamp = millis( );
+
+  if ( millis( ) - measurement_timestamp > 3000ul )
+  {
+    if ( dht_sensor.measure( temperature, humidity ) == true ) {
+      return ( true );
+    }
+    return false;
   }
-  return false;
 }
 
 
