@@ -11,30 +11,40 @@ int led = 9;
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 3;    // how many points to fade the LED by
 
-int period = 100;
+int ldrperiod = 100;
 unsigned long time_now = 0;
 
+
 int gstate = 0;
+
+const int numReadings = 6;
+
+int readings[numReadings];      // the readings from the analog input
+int readIndex = 0;              // the index of the current reading
+int total = 0;                  // the running total
+int average = 0;                // the average
 
 void setup() {
 
   Serial.begin(9600); //sets serial port for communication
   pinMode(led, OUTPUT);
-
+  for (int thisReading = 0; thisReading < numReadings; thisReading++) {
+    readings[thisReading] = 0;
+  }
 }
 
 void loop() {
-  //LED Sensor
+  //LDR Sensor
   switch (gstate) {
 
     case 0:
-      if (millis() >= time_now + period) {
+      if (millis() >= time_now + ldrperiod) {
         sensorValue = analogRead(sensorPin); // read the value from the sensor
         if (sensorValue > 200) {
           delay(600);
           gstate = 1;
         }
-        time_now += period;
+        time_now += ldrperiod;
       }
 
       break;
@@ -60,15 +70,27 @@ void loop() {
       float humidity;
 
       if (measure_environment( &temperature, &humidity ) == true) {
+        // subtract the last reading:
+        total = total - readings[readIndex];
+        // read from the sensor:
+        readings[readIndex] = humidity;
+        // add the reading to the total:
+        total = total + readings[readIndex];
+        // advance to the next position in the array:
+        readIndex = readIndex + 1;
 
-          if(humidity >= 90){
-            gstate = 1;
-          }
-//        Serial.print( "T = " );
-//        Serial.print( temperature, 1 );
-//        Serial.print( " deg. C, H = " );
-        Serial.print( humidity, 1 );
-        Serial.println( "%" );
+        if (readIndex >= numReadings) {
+          // ...wrap around to the beginning:
+          readIndex = 0;
+        }
+        // calculate the average:
+        average = total / numReadings;
+        // send it to the computer as ASCII digits
+        Serial.println(average);
+
+        if (average >= 60) {
+          gstate = 1;
+        }
       }
       break;
 
@@ -89,7 +111,6 @@ static bool measure_environment( float *temperature, float *humidity ) {
     return false;
   }
 }
-
 
 void reset() {
   fadeAmount = 3;
