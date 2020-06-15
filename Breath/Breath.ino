@@ -30,6 +30,7 @@ void loop() {
     case 0:
       if (millis() >= time_now + period) {
         sensorValue = analogRead(sensorPin); // read the value from the sensor
+        Serial.println(sensorValue);
         if (sensorValue > 200) {
           delay(600);
           gstate = 1;
@@ -67,8 +68,8 @@ void loop() {
 //        Serial.print( "T = " );
 //        Serial.print( temperature, 1 );
 //        Serial.print( " deg. C, H = " );
-        Serial.print( humidity, 1 );
-        Serial.println( "%" );
+//        Serial.print( humidity, 1 );
+//        Serial.println( "%" );
       }
       break;
 
