@@ -1,4 +1,4 @@
-int sensorPin = A0; // select the input pin for LDR
+int sensorPin = A1; // select the input pin for LDR
 int sensorValue = 0; // variable to store the value coming from the sensor
 
 int led = 9;
