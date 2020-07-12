@@ -1,44 +1,62 @@
 class Cell {
-  PVector position;
-
-  float radius;
-  float offset;
-  boolean status;
-  color cellcolor;
-  boolean mousee;
+  float x, y;
+  float diameter;
+  int id;
   Cell[] others;
+  boolean display = true;
+  boolean status = false;
+  color cellcolor = 0;
+  boolean mouseclick;
+  boolean onoff = false;
 
-  Cell(int i) {
-    radius = 30;
-    offset = radius/2;
-    position = new PVector(random(0+offset, width-offset), random(0+offset, height-offset));
-    cellcolor = color(255);
-    boolean mousee = false;
+  Cell(float xin, float yin, int idin, Cell[] oin) {
+    x = xin;
+    y = yin;
+    diameter = 60;
+    id = idin;
+    others = oin;
+    
+  }
+
+  void collide() {
+    for (int i = id + 1; i < numcells; i++) {
+      float distance = dist(x, y, others[i].x, others[i].y);
+      float minDist = others[i].diameter/2 + diameter/2;
+      if ((distance < minDist) || (x-diameter/2 < 0)|| (x+diameter/2 > width)|| (y-diameter/2 < 0)|| (y+diameter/2 > height)) {
+        display = false;
+        break;
+      }
+    }
   }
 
   boolean status() {
     status=false;
 
-    if ((dist(mouseX, mouseY, position.x, position.y)<radius) && (mousePressed ==true)) {
+    if ((dist(mouseX, mouseY, x, y)<diameter) && (mousePressed ==true)) {
       status = true;
     }
     return status;
   }
 
-  void checkNeighbors() {
+  void display() {
+    if (!display) return;
+    if (status== true) {
+      cellcolor = 255;
+    } else cellcolor =0;
+    fill(cellcolor);
+    ellipse(x, y, diameter, diameter);
   }
 
-  void play() {
-    if (status == true) {
-      fill(cellcolor);
+  void checkNeighbors() {
+  for (int i = id + 1; i < numcells; i++) {
+      float distance = dist(x, y, others[i].x, others[i].y);
+      if ((distance < 800) && (others[i].status == true)){
+      status = true;
+        break;
+      }
     }
-    else fill(0);
-
-    ellipseMode(CENTER);
-    ellipse(position.x, position.y, radius, radius);
-  } 
+  }
   void reset() {
     status=false;
-    fill(cellcolor);
   }
 }
