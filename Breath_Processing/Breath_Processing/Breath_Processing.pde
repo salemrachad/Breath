@@ -1,28 +1,29 @@
-int numcells = 200;
+ArrayList<Cell> cells;
+int cell_Count=50;
+
 boolean overlap;
-Cell[] cells = new Cell[numcells];
-boolean offon = false;
+//Cell[] cellss = new Cell[cell_Count];
 
 void setup() {
   size(800, 800);
-   noStroke();
-  smooth();
-  for (int i = 0; i < numcells; i++) {
-    cells[i] = new Cell(random(width), random(height), i, cells);
+  cells = new ArrayList<Cell>();
+  for (int i=0; i < cell_Count; i++) { 
+    cells.add(new Cell(random(width), random(height), i, cells));
   }
+  
 }
 void draw() {
- 
-  for (int i = 0; i < numcells; i++) {
-    cells[i].collide();
+
+  for (int i = 0; i < cell_Count; i++) {
+    cells.get(i).collide();
   }
-  for (int i = 0; i < numcells; i++) {
-    cells[i].status();
+  for (int i = 0; i < cell_Count; i++) {
+    cells.get(i).status();
   }
-  for (int i = 0; i < numcells; i++) {
-    cells[i].checkNeighbors();
+  for (int i = 0; i < cell_Count; i++) {
+    cells.get(i).checkNeighbors();
   }
-  for (int i = 0; i < numcells; i++) {
-    cells[i].display();
+  for (int i = 0; i < cell_Count; i++) {
+    cells.get(i).display();
   }
 }

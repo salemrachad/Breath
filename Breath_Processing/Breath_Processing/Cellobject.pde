@@ -2,29 +2,27 @@ class Cell {
   float x, y;
   float diameter;
   int id;
-  Cell[] others;
+  ArrayList<Cell> others;
   boolean display = true;
   boolean status = false;
   color cellcolor = 0;
   boolean mouseclick;
   boolean onoff = false;
 
-  Cell(float xin, float yin, int idin, Cell[] oin) {
+  Cell(float xin, float yin, int idin, ArrayList<Cell> oin) {
     x = xin;
     y = yin;
     diameter = 60;
     id = idin;
     others = oin;
-    
   }
 
   void collide() {
-    for (int i = id + 1; i < numcells; i++) {
-      float distance = dist(x, y, others[i].x, others[i].y);
-      float minDist = others[i].diameter/2 + diameter/2;
-      if ((distance < minDist) || (x-diameter/2 < 0)|| (x+diameter/2 > width)|| (y-diameter/2 < 0)|| (y+diameter/2 > height)) {
-        display = false;
-        break;
+    for (int i = id + 1; i < cell_Count; i++) {
+      float distance = dist(x, y, others.get(i).x, others.get(i).y);
+      float minDist = others.get(i).diameter/2 + diameter/2;
+      if ((distance < minDist) || (x-diameter/2 < 0)|| (x+diameter/2 > width)|| (y-diameter/2 < 0)|| (y+diameter/2 > height)) { 
+        //display = false;
       }
     }
   }
@@ -48,10 +46,10 @@ class Cell {
   }
 
   void checkNeighbors() {
-  for (int i = id + 1; i < numcells; i++) {
-      float distance = dist(x, y, others[i].x, others[i].y);
-      if ((distance < 800) && (others[i].status == true)){
-      status = true;
+    for (int i = id + 1; i < cell_Count; i++) {
+      float distance = dist(x, y, others.get(i).x, others.get(i).y);
+      if ((distance < 100) && (others.get(i).status == true)) {
+        status = true;
         break;
       }
     }
