@@ -8,6 +8,7 @@ class Cell {
   color cellcolor = 0;
   boolean mouseclick;
   boolean onoff = false;
+  int counter = 0;
 
   Cell(float xin, float yin, int idin, Cell[] oin) {
     x = xin;
@@ -50,8 +51,9 @@ class Cell {
   void checkNeighbors() {
   for (int i = id + 1; i < numcells; i++) {
       float distance = dist(x, y, others[i].x, others[i].y);
-      if ((distance < 800) && (others[i].status == true)){
+      if ((distance < 300) && (others[i].status == true)){
       status = true;
+      counter = counter +1;
         break;
       }
     }
