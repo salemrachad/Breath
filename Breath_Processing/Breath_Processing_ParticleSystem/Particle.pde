@@ -7,64 +7,68 @@ class Particle {
   float radius;
   //float checkRadius;
   boolean mouseclick;
-  boolean status = false;
-  float opacity;
+  boolean status;
+  float fade = 0.25;
 
-  //Particle(PVector l) {   location of pvector
-  Particle(PVector lin,int idin) {
-    
+  Particle(PVector lin, int idin) {
+
     radius = 40;
-    cellColor = 255;
+    cellColor = 1;
     position = lin.get();
     id = idin;
-    opacity = 255;
-    
-  }
-  
-  void readSensors() {
-    
-    
-  }
-
-  void triggerLED() {
-    for (float i = 255; i>0; i--){
-      opacity = i;
-    }
-    
     status = false;
-    println("status is false");
   }
 
-  boolean isDead() {
-    return true;
+
+
+  boolean status() {
+
+    if ((dist(mouseX, mouseY, position.x, position.y)<radius) && (mousePressed ==true)) {
+      status = true;
+    } else status = false;
+    return status;
+  }
+
+
+  void update(ArrayList<Particle> p, int i) {
+
+    for (int j = i+1; j<p.size(); j++) {
+      float distance = position.dist(p.get(i).position);
+
+      if (distance < 200) {
+        float intensity = map (distance, 0, 200, 0, 255);
+
+
+        readSensors(intensity);
+      }
+    }
+  }
+
+  void readSensors(float intensity_) {   //Detect LDR
+
+    //LDR Range
+    //LDR Sensitivity
+    
+  }
+
+  void triggerLED() {                    // Emit Light
+    if (status == true) {
+      cellColor = 254;
+    } else if (status == false) {
+      cellColor = 1;
+    }
   }
 
   void display() {
     smooth();
     noStroke();
-    
-    if (status == true){
-      println("status is True");
-      triggerLED();
-    }
-    fill(cellColor,opacity);
+    fill(cellColor);
     ellipse(position.x, position.y, radius, radius);
   }
   
-   boolean status() {
-    status=false;
-
-    if ((dist(mouseX, mouseY, position.x, position.y)<radius) && (mousePressed ==true)) {
-      status = true;
-    }
-    return status;
+  void run() {
+    status();
+    triggerLED();
+    display();
   }
-
-    void update() {
-    }
-
-    void run() {
-      update();
-      display();
-    }
 }

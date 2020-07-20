@@ -1,40 +1,40 @@
 class ParticleSystem {
 
-  ArrayList<Particle> particles;
+  ArrayList<Particle> particles = new ArrayList<Particle>(); //Arraylist of Particles
+  
   PVector origin; //This particular ParticleSystem implementation includes an origin point where each Particle begins.
-  PVector v,v1;
-  int howmanyparticles;
+  int howmanyparticles = 2;
 
   ParticleSystem(PVector position) {
 
-    particles = new ArrayList<Particle>();
     origin = position.get();
-     v = new PVector(random(0, height), random(0, height));
-     v1 = new PVector(random(0, height), random(0, height));
-     
+
+    
   }
 
-  void addParticle(int howmanyparticles_) {
-  
-    //howmanyparticles = howmanyparticles_;
-    //for (int i=0; i< howmanyparticles; i ++){
-    //particles.add(new Particle());
-    //}
-    //The origin is passed to each Particle when it is added.
-      particles.add(new Particle(v,0));
-      particles.add(new Particle(v1,1));
-
+  void addParticle() {
+    for (int i = 0; i < howmanyparticles; i++) {
+      particles.add(new Particle(new PVector(random(width), random(0, height)), i));
+    }
   }
 
   void run() {   
     for (int i = particles.size()-1; i >= 0; i--) {
       Particle p = particles.get(i);
-      p.status();
-      p.display();
-
-      if (p.isDead()) {
-        particles.remove(i);
-      }
+      p.run();
     }
   }
 }
+
+ //void checkNeighbors(int i) {
+
+ //   for (int j = i+1; j<particles.size(); j++) {
+ //     float distance = position.dist(p.get(i).position);
+
+ //     if (distance < 200) {
+ //       float intensity = map (distance, 0, 200, 0, 255);
+
+
+ //       readSensors(intensity);
+ //     }
+ //   }
