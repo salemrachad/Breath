@@ -5,7 +5,6 @@ class Particle {
   int id;
   int cellColor;
   float radius;
-  //float checkRadius;
   boolean mouseclick;
   boolean status;
   float fade = 0.25;
@@ -36,10 +35,10 @@ class Particle {
       float distance = position.dist(p.get(i).position);
 
       if (distance < 200) {
-        float intensity = map (distance, 0, 200, 0, 255);
+        //float intensity = map (distance, 0, 200, 0, 255);
 
 
-        readSensors(intensity);
+        //readSensors(intensity);
       }
     }
   }

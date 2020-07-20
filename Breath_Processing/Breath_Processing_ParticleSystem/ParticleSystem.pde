@@ -3,7 +3,7 @@ class ParticleSystem {
   ArrayList<Particle> particles = new ArrayList<Particle>(); //Arraylist of Particles
   
   PVector origin; //This particular ParticleSystem implementation includes an origin point where each Particle begins.
-  int howmanyparticles = 2;
+  int howmanyparticles = 5;
 
   ParticleSystem(PVector position) {
 
@@ -21,6 +21,8 @@ class ParticleSystem {
   void run() {   
     for (int i = particles.size()-1; i >= 0; i--) {
       Particle p = particles.get(i);
+      //p.readSensors
+      //p.triggerLED
       p.run();
     }
   }
