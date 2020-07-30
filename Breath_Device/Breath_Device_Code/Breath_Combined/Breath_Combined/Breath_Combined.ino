@@ -1,3 +1,5 @@
+#include <SoftwareSerial.h>
+
 //MICROPHONE SETUP
 
 //int soundPin = A0;
@@ -9,10 +11,10 @@
 
 // LDR SETUP
 
-int sensorPin = 3; // select the input pin for LDR
+//int sensorPin = A1; // select the input pin for LDR
 
 //Attiny Pin
- // int sensorPin = 2;
+int sensorPin = 2;
 int sensorValue = 0; // variable to store the value coming from the sensor
 
 //Variables to handle timing for LED
@@ -23,7 +25,7 @@ float timeSensor = 600;
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 // LED SETUP
-//Attiny Pin 
+//Attiny Pin
 int led = 4;
 //int led = 9;
 int brightness = 0;    // how bright the LED is
@@ -74,14 +76,14 @@ void loop() {
       if ( brightness >= 255) {
         time_now = millis();
         delay(500);
-        
+
 
         fadeAmount = -fadeAmount;
       }
       if (brightness < 0) {
         resetSystem();
       }
-      
+
       //if (millis() - timerLed >= timeLed) {
       //timerLed = millis();
       analogWrite(led, brightness);
