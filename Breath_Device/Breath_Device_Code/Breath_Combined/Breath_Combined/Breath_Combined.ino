@@ -5,7 +5,7 @@
 //int soundPin = A0;
 
 //Attiny Pin
-int soundPin = 3;
+ int soundPin = 2;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -58,8 +58,8 @@ void loop() {
   switch (gstate) {
 
     case 0:
-      readMic();
-      // If enough time has passed (more than timeSensor - 600ms- )
+        readMic();
+     //  If enough time has passed (more than timeSensor - 600ms- )
       if (millis() - timerSensor >= timeSensor) {
         // Get a new time reference in timerSensor (a new timer count is started)
         timerSensor = millis();
@@ -69,7 +69,7 @@ void loop() {
           gstate = 1;
         }
       }
-      break;
+     break;
     case 1:
       brightness = brightness + fadeAmount;
 
@@ -102,7 +102,7 @@ void readMic() {
   }
   sum = sum / 100;
   //Serial.println(sum);
-  if ((sum < 480) || (sum > 520)) gstate = 1;
+  if  (sum > 200) gstate = 1;
 }
 
 void resetSystem() {
