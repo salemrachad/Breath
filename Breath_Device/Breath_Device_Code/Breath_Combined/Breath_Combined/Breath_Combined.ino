@@ -1,18 +1,18 @@
 //MICROPHONE SETUP
 
-int soundPin = A0;
+//int soundPin = A0;
 
 //Attiny Pin
-// int soundPin = 0;
+ int soundPin = 2;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 // LDR SETUP
 
-int sensorPin = A1; // select the input pin for LDR
+int sensorPin = 3; // select the input pin for LDR
 
 //Attiny Pin
-// int sensorPin = 5;
+ // int sensorPin = 2;
 int sensorValue = 0; // variable to store the value coming from the sensor
 
 //Variables to handle timing for LED
@@ -24,8 +24,8 @@ float timeSensor = 600;
 
 // LED SETUP
 //Attiny Pin 
-// int led = 4;
-int led = 9;
+int led = 4;
+//int led = 9;
 int brightness = 0;    // how bright the LED is
 int fadeAmount = 3;    // how many points to fade the LED by
 
@@ -43,7 +43,7 @@ unsigned long time_now = 0;
 
 void setup() {
 
-  Serial.begin(115200); //sets serial port for communication
+  //Serial.begin(115200); //sets serial port for communication
   pinMode(led, OUTPUT);
 
   // Store actual time in every timer
@@ -56,8 +56,8 @@ void loop() {
   switch (gstate) {
 
     case 0:
-      readMic();
-      // If enough time has passed (more than timeSensor - 600ms- )
+        readMic();
+     //  If enough time has passed (more than timeSensor - 600ms- )
       if (millis() - timerSensor >= timeSensor) {
         // Get a new time reference in timerSensor (a new timer count is started)
         timerSensor = millis();
@@ -67,7 +67,7 @@ void loop() {
           gstate = 1;
         }
       }
-      break;
+     break;
     case 1:
       brightness = brightness + fadeAmount;
 
@@ -100,7 +100,7 @@ void readMic() {
   }
   sum = sum / 100;
   //Serial.println(sum);
-  if ((sum < 480) || (sum > 520)) gstate = 1;
+  if  (sum > 200) gstate = 1;
 }
 
 void resetSystem() {
