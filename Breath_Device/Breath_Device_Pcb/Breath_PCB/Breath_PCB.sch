@@ -124,28 +124,6 @@ F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/atmel-2586-avr-8-bit-microc
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+5V #PWR07
-U 1 1 5F1901C2
-P 4600 5050
-F 0 "#PWR07" H 4600 4900 50  0001 C CNN
-F 1 "+5V" H 4450 5100 50  0000 C CNN
-F 2 "" H 4600 5050 50  0001 C CNN
-F 3 "" H 4600 5050 50  0001 C CNN
-	1    4600 5050
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR08
-U 1 1 5F191144
-P 4700 5050
-F 0 "#PWR08" H 4700 4800 50  0001 C CNN
-F 1 "GND" H 4550 5000 50  0000 C CNN
-F 2 "" H 4700 5050 50  0001 C CNN
-F 3 "" H 4700 5050 50  0001 C CNN
-	1    4700 5050
-	-1   0    0    1   
-$EndComp
-$Comp
 L power:+5V #PWR05
 U 1 1 5F19C788
 P 4200 3250
@@ -213,28 +191,6 @@ F 3 "" H 6650 4050 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	6300 4050 6650 4050
-$Comp
-L power:+5V #PWR03
-U 1 1 5F2316AA
-P 4550 2100
-F 0 "#PWR03" H 4550 1950 50  0001 C CNN
-F 1 "+5V" H 4400 2150 50  0000 C CNN
-F 2 "" H 4550 2100 50  0001 C CNN
-F 3 "" H 4550 2100 50  0001 C CNN
-	1    4550 2100
-	-1   0    0    1   
-$EndComp
-$Comp
-L power:GND #PWR04
-U 1 1 5F2322C8
-P 4300 2100
-F 0 "#PWR04" H 4300 1850 50  0001 C CNN
-F 1 "GND" H 4150 2050 50  0000 C CNN
-F 2 "" H 4300 2100 50  0001 C CNN
-F 3 "" H 4300 2100 50  0001 C CNN
-	1    4300 2100
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	6600 2250 6600 1950
 Wire Wire Line
@@ -299,32 +255,6 @@ Wire Wire Line
 Connection ~ 7200 3150
 Wire Wire Line
 	7200 3150 7200 3400
-$Comp
-L Connector:Conn_01x01_Male J3
-U 1 1 5F18324C
-P 4300 1550
-F 0 "J3" V 4454 1462 50  0000 R CNN
-F 1 "Conn_01x01_Male" V 4363 1462 50  0000 R CNN
-F 2 "Connector_Pin:Pin_D1.3mm_L11.0mm" H 4300 1550 50  0001 C CNN
-F 3 "~" H 4300 1550 50  0001 C CNN
-	1    4300 1550
-	0    1    1    0   
-$EndComp
-$Comp
-L Connector:Conn_01x01_Male J1
-U 1 1 5F183F8A
-P 4550 1550
-F 0 "J1" V 4612 1594 50  0000 L CNN
-F 1 "Conn_01x01_Male" V 4703 1594 50  0000 L CNN
-F 2 "Connector_Pin:Pin_D1.3mm_L11.0mm" H 4550 1550 50  0001 C CNN
-F 3 "~" H 4550 1550 50  0001 C CNN
-	1    4550 1550
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	4550 2100 4550 1750
-Wire Wire Line
-	4300 2100 4300 1750
 $Comp
 L Connector:Conn_01x01_Male J4
 U 1 1 5F190794
@@ -395,6 +325,32 @@ Wire Wire Line
 	5350 2300 5350 2400
 Wire Wire Line
 	5100 3850 4800 3850
+Wire Wire Line
+	4700 5050 4700 5150
+Wire Wire Line
+	4600 5050 4600 5150
+$Comp
+L power:GND #PWR08
+U 1 1 5F191144
+P 4700 5050
+F 0 "#PWR08" H 4700 4800 50  0001 C CNN
+F 1 "GND" H 4550 5000 50  0000 C CNN
+F 2 "" H 4700 5050 50  0001 C CNN
+F 3 "" H 4700 5050 50  0001 C CNN
+	1    4700 5050
+	-1   0    0    1   
+$EndComp
+$Comp
+L power:+5V #PWR07
+U 1 1 5F1901C2
+P 4600 5050
+F 0 "#PWR07" H 4600 4900 50  0001 C CNN
+F 1 "+5V" H 4450 5100 50  0000 C CNN
+F 2 "" H 4600 5050 50  0001 C CNN
+F 3 "" H 4600 5050 50  0001 C CNN
+	1    4600 5050
+	1    0    0    -1  
+$EndComp
 $Comp
 L Switch:SW_SPDT SW1
 U 1 1 5F2E66E4
@@ -406,8 +362,12 @@ F 3 "~" H 4000 5200 50  0001 C CNN
 	1    4000 5200
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	4600 5050 4600 5150
-Wire Wire Line
-	4700 5050 4700 5150
+Text Notes 4500 4850 0    50   ~ 0
+Actually we're using 3.7V
+Text Notes 3950 3100 0    50   ~ 0
+Actually we're using 3.7V
+Text Notes 6950 1450 0    50   ~ 0
+Actually we're using 3.7V
+Text Notes 5850 5700 0    50   ~ 0
+Actually we're using 3.7V
 $EndSCHEMATC

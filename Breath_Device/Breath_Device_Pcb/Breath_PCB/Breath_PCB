@@ -1,0 +1,25 @@
+Source,C:\Users\racha\Documents\Arduino\Breath\Breath_Device\Breath_Device_Pcb\Breath_PCB\Breath_PCB.sch
+Kicad Rev,Eeschema (5.1.6)-1
+Generated Date,31/07/2020 11:42:41
+
+Title,Not Set
+Company,Not Set
+Revision,Not Set
+Date Issue,Not Set
+
+Reference,Value,Library,Library Ref
+D1,LED,Device,LED
+R5,1kR,Device,R
+R7,10R,Device,R
+R6,10R,Device,R
+J2,Conn_01x02_Female,Connector,Conn_01x02_Female
+Q1,BUK9M28-80EX,Transistor_FET,BUK9M28-80EX
+R1,R_PHOTO,Device,R_PHOTO
+R2,R_PHOTO,Device,R_PHOTO
+R4,R_PHOTO,Device,R_PHOTO
+U1,ATtiny85-20PU,MCU_Microchip_ATtiny,ATtiny85-20PU
+R3,10kR,Device,R
+J4,Conn_01x01_Male,Connector,Conn_01x01_Male
+R8,1kR,Device,R
+R9,1kR,Device,R
+SW1,SW_SPDT,Switch,SW_SPDT

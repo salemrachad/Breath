@@ -1,17 +1,17 @@
 ArrayList<Particle> particles;
 PFont font;
-int numParticles = 20;
+int numParticles = 2;
 
 
 void setup() {
-  size(800, 800);
+  size(600, 600);
   frameRate(30);
   
   particles = new ArrayList<Particle>();
   
   for (int i = 0; i < numParticles; i++) {
   
-    Particle p = new Particle(new PVector(random(width), random(height)));
+    Particle p = new Particle(new PVector(random(0+40,width-40), random(0+40,height-40)));
     particles.add(p);
   }
   
