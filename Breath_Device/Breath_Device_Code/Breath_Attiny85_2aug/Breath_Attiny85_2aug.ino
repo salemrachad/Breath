@@ -71,14 +71,14 @@ void loop() {
     case 0:
       readMic();
 //      // If enough time has passed (more than timeSensor - 600ms- )
-//      if (millis() - timerSensor >= timeSensor) {
-//        // Get a new time reference in timerSensor (a new timer count is started)
-//        timerSensor = millis();
-//        sensorValue = analogRead(sensorPin); // read the value from the sensor
-//        if (sensorValue > 400) {
-//          gstate = 1;
-//        }
-//      }
+      if (millis() - timerSensor >= timeSensor) {
+        // Get a new time reference in timerSensor (a new timer count is started)
+        timerSensor = millis();
+        sensorValue = analogRead(sensorPin); // read the value from the sensor
+        if (sensorValue > 950) {
+          gstate = 1;
+        }
+      }
       break;
     case 1:
       brightness = brightness + fadeAmount;

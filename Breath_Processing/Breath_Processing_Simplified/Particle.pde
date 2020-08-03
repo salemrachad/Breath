@@ -3,17 +3,17 @@ class Particle {
   PVector position;
   float diameter;
   boolean status;
-  
-  int gstatus;
+
+  int gstate;
   int stoplisteningtimer = 1000;
   long stop_timenow =0;
-  
+
   float distance_threshold;
 
   int period = 300;
   long time_now = 0;
 
-  float timerLight = 200;
+  float timerLight = 500;
   float timeLightRef = 0;
 
   Particle(PVector lin) {
@@ -23,7 +23,7 @@ class Particle {
     status = false;
     distance_threshold = 300;
     timeLightRef = millis() - timerLight;
-    gstatus= 0 ;
+    gstate= 0 ;
   }
 
   boolean getLight(Particle p) {
@@ -37,14 +37,33 @@ class Particle {
   }
 
   void triggerLight() {
-    time_now = millis();
 
-    while (millis() < time_now + period) {
-      //wait approx. [period] ms
+    time_now = millis();
+    //while (millis() < time_now + period) {
+    ////  //wait approx. [period] ms
+    //}
+    timeLightRef = millis();
+  }
+
+  void particlestate(Particle p) {
+
+    switch (gstate) {
+
+    case 0:
+      
+      break;
+
+    case 1:
+      triggerLight();
+      gstate = 0 ;
+      break;
+
+    case 2:
+
+      break;
     }
-      timeLightRef = millis();
-    }
-  
+  }
+
 
   void display() {
     smooth();
@@ -58,7 +77,6 @@ class Particle {
       fill(0);
     }
     ellipse(position.x, position.y, diameter, diameter);
-
     noFill();
     stroke(255, 0, 0);
     ellipse(position.x, position.y, distance_threshold, distance_threshold);
@@ -67,6 +85,8 @@ class Particle {
   void mousePressed() {
     PVector mousePosition = new PVector(mouseX, mouseY);
     if (mousePosition.dist(position) < 0.5 * diameter) {
+
+      //gstate = 1;
       triggerLight();
     }
   }
