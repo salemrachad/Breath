@@ -22,9 +22,9 @@ void draw() {
 
   background(105, 100, 255);
 
-  for (int i = 0; i < numParticles; i++) {
-    particles.get(i).update();
-  }
+  //for (int i = 0; i < numParticles; i++) {
+  //  particles.get(i).update(particles.get(i));
+  //}
 
   for (int i= 0; i < numParticles; i++) {
 
@@ -32,18 +32,17 @@ void draw() {
 
     for (int j = 0; j < numParticles; j++) {
       if (j != i) {
-
-        if (p.getLight(particles.get(j))) {
-        // p.particlestate(particles.get(j));
-          p.triggerLight();
-        }
+        p.Run(particles.get(j));
+        //if (p.getLight(particles.get(j))) {;
+        //  p.triggerLight();
+        //}
       }
     }
   }
 
-  for (int i = 0; i < numParticles; i++) {
-    particles.get(i).display();
-  }
+  //for (int i = 0; i < numParticles; i++) {
+  //  particles.get(i).display();
+  //}
 
   text(frameRate, 20, 20);
 }
