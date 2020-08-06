@@ -36,39 +36,45 @@ class Particle {
 
   void Run(Particle p) {
 
-    //if in stat 0 look for event
-    //if in state 1- use timefrom trigger --
-    display();
+
 
     switch (gstate) {
 
     case 0:     // Looking for event
-      //display();
+
       if (getLight(p)) {
-        gstate = 1;
+        triggerLight();
+        gstate = 3;
       }
-      break;
+      break;  
 
     case 1:     // found event and start light
-      triggerLight();
-      if (millis()- timeLightRef < timerLight) {
-        
+      if (millis()- timeLightRef > timerLight+1000) {
+        status = false;
+        triggerLight();
+        gstate =2 ;
       }
-      gstate =2 ;
       break;
 
     case 2:     // wait for a little bit and then switch back to 0
-      stop_timenow = millis();
-      if (millis() - stop_timenow > stoplisteningtimer) {
-        status = false;
+      if (millis()- timeLightRef > timerLight+1250) {
         gstate = 0;
       }
       break;
+
+    case 3:
+      if (millis()- timeLightRef > timerLight-250) {
+        status = true;
+        triggerLight();
+        gstate =1;
+      }
+      break;
     }
+
+    display();
   }
 
   void triggerLight() {
-    time_now = millis();
     timeLightRef = millis();
   }
 
@@ -76,28 +82,24 @@ class Particle {
   void display() {
     smooth();
     noStroke();   
-    //if (gstate == 1) {
-    //  fill(255);
-    //} else fill(0);
 
-    if (millis() - timeLightRef < timerLight) {
-      status = true;
-      fill(255);
-    } else {
-      status = false;
-      fill(0);
-    }
+    if (status) fill(255);
+    else fill(0);
+
+   
 
     ellipse(position.x, position.y, diameter, diameter);
     noFill();
-    stroke(255, 0, 0);
-    ellipse(position.x, position.y, distance_threshold, distance_threshold);
+    stroke(255);
+   // ellipse(position.x, position.y, distance_threshold, distance_threshold);
   }
 
   void mousePressed() {
     PVector mousePosition = new PVector(mouseX, mouseY);
     if (mousePosition.dist(position) < 0.5 * diameter) {
+      triggerLight();
       status = true;
+      gstate = 1;
     }
   }
 }

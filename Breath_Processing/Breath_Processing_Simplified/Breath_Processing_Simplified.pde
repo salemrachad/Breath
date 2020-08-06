@@ -1,10 +1,10 @@
 ArrayList<Particle> particles;
 PFont font;
-int numParticles = 5;
+int numParticles = 50;
 
 
 void setup() {
-  size(600, 600);
+  size(1800, 1200);
   frameRate(30);
 
   particles = new ArrayList<Particle>();
@@ -12,6 +12,7 @@ void setup() {
   for (int i = 0; i < numParticles; i++) {
 
     Particle p = new Particle(new PVector(random(0+40, width-40), random(0+40, height-40)));
+    
     particles.add(p);
   }
 
@@ -22,10 +23,6 @@ void draw() {
 
   background(105, 100, 255);
 
-  //for (int i = 0; i < numParticles; i++) {
-  //  particles.get(i).update(particles.get(i));
-  //}
-
   for (int i= 0; i < numParticles; i++) {
 
     Particle p = particles.get(i);
@@ -33,9 +30,6 @@ void draw() {
     for (int j = 0; j < numParticles; j++) {
       if (j != i) {
         p.Run(particles.get(j));
-        //if (p.getLight(particles.get(j))) {;
-        //  p.triggerLight();
-        //}
       }
     }
   }
