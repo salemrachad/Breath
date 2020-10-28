@@ -91,7 +91,7 @@ class Particle {
     ellipse(position.x, position.y, diameter, diameter);
     noFill();
     stroke(255);
-   // ellipse(position.x, position.y, distance_threshold, distance_threshold);
+    ellipse(position.x, position.y, distance_threshold, distance_threshold);
   }
 
   void mousePressed() {
